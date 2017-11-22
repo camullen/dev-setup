@@ -1,0 +1,174 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/syntastic'
+Plugin 'majutsushi/tagbar'
+Plugin 'tpope/vim-repeat'
+Plugin 'valloric/youcompleteme'
+" Plugin 'pangloss/vim-javascript'
+Plugin 'othree/yajs.vim'
+Plugin 'othree/es.next.syntax.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'terryma/vim-multiple-cursors'
+
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+" Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+" filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+filetype plugin indent on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+let g:mapleader=" "
+
+set backspace=2
+set nobackup
+set nowritebackup
+set noswapfile
+set history=50
+set ruler
+set showcmd
+set incsearch
+set laststatus=2
+set autowrite
+set autoread
+
+" Softtabs, 2 spaces
+set tabstop=2
+set shiftwidth=2
+set shiftround
+set expandtab
+set autoindent
+
+" Display extra whitespace
+set list listchars=tab:»·,trail:·,nbsp:·
+
+" Use one space, not two, after punctuation.
+set nojoinspaces
+
+" Make it obvious where 80 characters is
+set textwidth=80
+set colorcolumn=+1
+
+" Numbers
+set number
+set numberwidth=5
+
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Auto-reload vimconfiguration
+" augroup myvimrchooks
+ " au!
+ " autocmd bufwritepost .vimrc source ~/.vimrc
+" augroup END
+
+
+if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
+  syntax on
+endif
+
+let g:NERDSpaceDelims = 1
+
+let g:airline_theme='solarized'
+let g:airline_solarized_bg='dark'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+
+nmap <F8> :TagbarToggle<CR>
+
+
+" NERDTree configuration
+
+" How can I open NERDTree automatically when vim starts up on opening a
+" directory?
+
+" This window is tab-specific, meaning it's used by all windows in the tab. This
+" trick also prevents NERDTree from hiding when first selecting a file.
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+" NERDTree tabs toggle
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
+
+
+" Mappings to move lines
+" http://vim.wikia.com/wiki/Moving_lines_up_or_down
+nmap <S-j> :m .+1<CR>==
+nmap <S-k> :m .-2<CR>==
+imap <C-S-j> <Esc>:m .+1<CR>==gi
+imap <C-S-k> <Esc>:m .-2<CR>==gi
+vmap <S-j> :m '>+1<CR>gv=gv
+vmap <S-k> :m '<-2<CR>gv=gv
+
+" Setup solarized color scheme
+syntax enable
+set background=dark
+colorscheme solarized
+
+" Set current cursor syntax highlighting
+set cursorline
+
+
+
+" 
+" CtrlP setup
+" Tell ctrlp to ignore gitignore files
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+let g:ctrlp_map = '<C-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+" Enable system clipboard
+set clipboard=unnamed
